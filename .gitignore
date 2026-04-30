@@ -5,3 +5,5 @@ build/
 .next/
 *.log
 .DS_Store
+*.db
+*.sqlite

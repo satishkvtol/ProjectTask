@@ -12,10 +12,10 @@ router.get('/', async (req, res) => {
     
     const where: any = {};
     if (search) {
-      where.name = { contains: search as string, mode: 'insensitive' };
+      where.name = { contains: search as string };
     }
     if (location) {
-      where.location = { contains: location as string, mode: 'insensitive' };
+      where.location = { contains: location as string };
     }
     if (maxFees) {
       where.fees = { lte: parseInt(maxFees as string) };
@@ -67,7 +67,7 @@ router.post('/compare', async (req, res) => {
 router.post('/:id/save', authenticateToken, async (req: AuthRequest, res: any) => {
   try {
     const userId = req.user!.userId;
-    const collegeId = req.params.id;
+    const collegeId = req.params.id as string;
 
     // Check if already saved
     const existing = await prisma.savedCollege.findUnique({
@@ -95,7 +95,7 @@ router.post('/:id/save', authenticateToken, async (req: AuthRequest, res: any) =
 router.delete('/:id/save', authenticateToken, async (req: AuthRequest, res: any) => {
   try {
     const userId = req.user!.userId;
-    const collegeId = req.params.id;
+    const collegeId = req.params.id as string;
 
     await prisma.savedCollege.delete({
       where: {
